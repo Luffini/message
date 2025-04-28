@@ -1,0 +1,94 @@
+body {
+    background: linear-gradient(#cce7ff, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .scene {
+    position: relative;
+    width: 300px;
+    height: 500px;
+  }
+  
+  /* Tallo */
+  .stem {
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 6px; height: 250px;
+    background-color: green;
+    transform: translateX(-50%);
+  }
+  
+  /* Hojitas */
+  .leaf {
+    position: absolute;
+    width: 30px; height: 20px;
+    background: green;
+    border-radius: 50% 50% 0 50%;
+    opacity: 0;
+    animation: growLeaf 1s forwards;
+  }
+  .leaf.left {
+    bottom: 140px; left: calc(50% - 30px);
+    transform: rotate(-30deg);
+    animation-delay: 2s;
+  }
+  .leaf.right {
+    bottom: 100px; left: 50%;
+    transform: rotate(30deg);
+    animation-delay: 2.5s;
+  }
+  @keyframes growLeaf { to { opacity: 1; } }
+  
+  /* Contenedor de la flor */
+  .flower {
+    position: absolute;
+    bottom: 250px; left: 50%;
+    width: 140px; height: 140px;
+    transform: translateX(-50%);
+  }
+  
+  /* Pétalos */
+  .petal {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 30px; height: 70px;
+    background: yellow;
+    border-radius: 50% 50% 0 0;
+    transform-origin: bottom center;
+    opacity: 0;
+    animation: appearPetal 0.5s forwards;
+  }
+  @keyframes appearPetal { to { opacity: 1; } }
+  
+  /* Centro */
+  .center {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 60px; height: 60px;
+    background: brown;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: inset 0 0 5px #000;
+    opacity: 0;
+    animation: appearCenter 1s forwards;
+    animation-delay: 1s;
+  }
+  @keyframes appearCenter { to { opacity: 1; } }
+  
+  /* Mensaje */
+  .message {
+    position: absolute;
+    top: 20px; width: 100%;
+    text-align: center;
+    font-size: 22px; color: #ff69b4;
+    opacity: 0;
+    animation: showMessage 2s forwards;
+    animation-delay: 8s;
+  }
+  @keyframes showMessage { to { opacity: 1; } }
+  
