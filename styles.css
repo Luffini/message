@@ -1,94 +1,138 @@
+/* Fondo dinámico */
 body {
-    background: linear-gradient(#cce7ff, #ffffff);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    overflow: hidden;
     font-family: 'Courier New', monospace;
   }
+  .sky {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #87ceeb, #e0f7ff);
+    overflow: hidden;
+    animation: skyCycle 8s linear infinite;
+  }
+  @keyframes skyCycle {
+    0%   { background: linear-gradient(to bottom, #87ceeb, #e0f7ff); }
+    50%  { background: linear-gradient(to bottom, #ffa500, #ff4500); } /* atardecer */
+    100% { background: linear-gradient(to bottom, #001a33, #000814); } /* noche */
+  }
+  .sun {
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, #ffe066, #ffcc33);
+    border-radius: 50%;
+    animation: moveSun 7s linear infinite;
+  }
+  @keyframes moveSun {
+    from { transform: translate(0,0); }
+    to   { transform: translate(-300px,300px); }
+  }
+  .cloud {
+    position: absolute;
+    width: 120px; height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+  .cloud1 { top: 50px; left: -150px; animation: moveCloud1 30s linear infinite; }
+  .cloud2 { top: 120px; left: -200px; animation: moveCloud2 40s linear infinite; }
+  @keyframes moveCloud1 { to { transform: translateX(1000px); }}
+  @keyframes moveCloud2 { to { transform: translateX(1200px); }}
   
+  /* Escena del girasol */
   .scene {
     position: relative;
     width: 300px;
     height: 500px;
+    margin: auto;
+    top: 50px;
   }
   
-  /* Tallo */
   .stem {
     position: absolute;
-    bottom: 0; left: 50%;
-    width: 6px; height: 250px;
+    bottom: -120px;   /* desplazado más abajo */
+    left: 50%;
+    width: 20px;
+    height: 300px;
     background-color: green;
     transform: translateX(-50%);
+    animation: sway 3s ease-in-out infinite alternate;
   }
+  @keyframes sway { from { transform: translateX(-50%) rotate(-2deg);} to { transform: translateX(-50%) rotate(2deg);} }
   
-  /* Hojitas */
   .leaf {
     position: absolute;
-    width: 30px; height: 20px;
+    width: 80px;
+    height: 40px;
     background: green;
     border-radius: 50% 50% 0 50%;
     opacity: 0;
     animation: growLeaf 1s forwards;
   }
-  .leaf.left {
-    bottom: 140px; left: calc(50% - 30px);
-    transform: rotate(-30deg);
-    animation-delay: 2s;
-  }
-  .leaf.right {
-    bottom: 100px; left: 50%;
-    transform: rotate(30deg);
-    animation-delay: 2.5s;
-  }
-  @keyframes growLeaf { to { opacity: 1; } }
+  .leaf.left { bottom: -15px; left: calc(50% - 30px); transform: rotate(-30deg); animation-delay: 2s; }
+  .leaf.right { bottom: -12px; left: 50%; transform: rotate(30deg); animation-delay: 2.5s; }
+  @keyframes growLeaf { to { opacity: 1; }}
   
-  /* Contenedor de la flor */
   .flower {
     position: absolute;
-    bottom: 250px; left: 50%;
-    width: 140px; height: 140px;
+    bottom: 250px;
+    left: 50%;
+    width: 140px;
+    height: 140px;
     transform: translateX(-50%);
   }
   
-  /* Pétalos */
-  .petal {
+  .petals {
     position: absolute;
     top: 50%; left: 50%;
-    width: 30px; height: 70px;
-    background: yellow;
-    border-radius: 50% 50% 0 0;
+    width: 0; height: 0;
+    transform-origin: center center;
+    animation: rotatePetals 8s linear infinite;
+  }
+  @keyframes rotatePetals {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  
+  .petal {
+    position: absolute;
+    top: 45%; left: 50%;
+    width: 50px; height: 100px;
+    background: linear-gradient(to bottom, #fff200, #ff9900);
+    border-radius: 100% 100% 0 0;
     transform-origin: bottom center;
     opacity: 0;
     animation: appearPetal 0.5s forwards;
+    border: 3px solid #cc7a00;
   }
-  @keyframes appearPetal { to { opacity: 1; } }
+  @keyframes appearPetal { to { opacity: 1; }}
   
-  /* Centro */
   .center {
     position: absolute;
-    top: 50%; left: 50%;
-    width: 60px; height: 60px;
+    top: 83%; left: 50%;
+    width: 160px; height: 160px; /* aumentado */
     background: brown;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: inset 0 0 5px #000;
+    box-shadow: inset 0 0 10px #000;
     opacity: 0;
     animation: appearCenter 1s forwards;
     animation-delay: 1s;
   }
-  @keyframes appearCenter { to { opacity: 1; } }
+  @keyframes appearCenter { to { opacity: 1; }}
   
-  /* Mensaje */
   .message {
     position: absolute;
-    top: 20px; width: 100%;
+    top: 10px; width: 100%;
     text-align: center;
     font-size: 22px; color: #ff69b4;
-    opacity: 0;
-    animation: showMessage 2s forwards;
-    animation-delay: 8s;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid #ff69b4;
+    animation: typing 4s steps(30), blink .75s step-end infinite;
+    animation-delay: 6s;
   }
-  @keyframes showMessage { to { opacity: 1; } }
-  
+  @keyframes typing { from { width: 0; } to { width: 100%; }}
+  @keyframes blink { 50% { border-color: transparent; }}
